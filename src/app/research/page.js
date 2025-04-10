@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Sidebar from '@/components/layout/Sidebar';
@@ -9,7 +9,8 @@ import FilterDropdown from '@/components/ui/FilterDropdown';
 import { allResearch } from '@/data/research';
 import Layout from '@/components/layout/Layout';
 
-export default function ResearchIndex() {
+// Create a separate component that uses useSearchParams
+function ResearchContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const queryParam = searchParams.get('q');
@@ -105,91 +106,111 @@ export default function ResearchIndex() {
   ];
   
   return (
-    <Layout>
-      <div className="container-custom py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-4">Research Repository</h1>
-          <p className="text-gray-600">
-            Browse through our collection of student research papers from various academic disciplines.
-          </p>
+    <div className="container-custom py-8">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-4">Research Repository</h1>
+        <p className="text-gray-600">
+          Browse through our collection of student research papers from various academic disciplines.
+        </p>
+      </div>
+      
+      <div className="flex flex-col md:flex-row gap-8">
+        {/* Sidebar */}
+        <div className="md:w-1/4">
+          <Sidebar 
+            activeDepartment={filters.department}
+            onFilterChange={handleFilterChange}
+          />
         </div>
         
-        <div className="flex flex-col md:flex-row gap-8">
-          {/* Sidebar */}
-          <div className="md:w-1/4">
-            <Sidebar 
-              activeDepartment={filters.department}
-              onFilterChange={handleFilterChange}
-            />
-          </div>
-          
-          {/* Main Content */}
-          <div className="md:w-3/4">
-            {/* Search and Filter Bar */}
-            <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
-              <div className="mb-4">
-                <SearchBar onSubmit={handleSearchSubmit} initialValue={searchQuery} />
-              </div>
-              
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="text-sm text-gray-600">
-                  Showing <span className="font-semibold">{filteredResearch.length}</span> results
-                  {searchQuery && (
-                    <span> for &quot;<span className="font-semibold">{searchQuery}</span>&quot;</span>
-                  )}
-                </div>
-                
-                <div className="w-48">
-                  <FilterDropdown
-                    title="Sort By"
-                    options={sortOptions}
-                    value={sortBy}
-                    onChange={setSortBy}
-                  />
-                </div>
-              </div>
+        {/* Main Content */}
+        <div className="md:w-3/4">
+          {/* Search and Filter Bar */}
+          <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
+            <div className="mb-4">
+              <SearchBar onSubmit={handleSearchSubmit} initialValue={searchQuery} />
             </div>
             
-            {/* Research Cards */}
-            {filteredResearch.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {filteredResearch.map((research, index) => (
-                  <motion.div
-                    key={research.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                  >
-                    <ResearchCard research={research} />
-                  </motion.div>
-                ))}
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="text-sm text-gray-600">
+                Showing <span className="font-semibold">{filteredResearch.length}</span> results
+                {searchQuery && (
+                  <span> for &quot;<span className="font-semibold">{searchQuery}</span>&quot;</span>
+                )}
               </div>
-            ) : (
-              <div className="text-center py-12">
-                <div className="mb-4 text-gray-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-medium mb-2">No Results Found</h3>
-                <p className="text-gray-600 mb-4">
-                  We couldn&apos;t find any research that matches your search criteria.
-                </p>
-                <button 
-                  onClick={() => {
-                    setSearchQuery('');
-                    setFilters({ years: [], department: '' });
-                    router.push('/research');
-                  }}
-                  className="btn-outline"
-                >
-                  Clear Filters
-                </button>
+              
+              <div className="w-48">
+                <FilterDropdown
+                  title="Sort By"
+                  options={sortOptions}
+                  value={sortBy}
+                  onChange={setSortBy}
+                />
               </div>
-            )}
+            </div>
           </div>
+          
+          {/* Research Cards */}
+          {filteredResearch.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {filteredResearch.map((research, index) => (
+                <motion.div
+                  key={research.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                >
+                  <ResearchCard research={research} />
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <div className="mb-4 text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-medium mb-2">No Results Found</h3>
+              <p className="text-gray-600 mb-4">
+                We couldn&apos;t find any research that matches your search criteria.
+              </p>
+              <button 
+                onClick={() => {
+                  setSearchQuery('');
+                  setFilters({ years: [], department: '' });
+                  router.push('/research');
+                }}
+                className="btn-outline"
+              >
+                Clear Filters
+              </button>
+            </div>
+          )}
         </div>
       </div>
+    </div>
+  );
+}
+
+// Loading fallback for Suspense
+function ResearchLoading() {
+  return (
+    <div className="container-custom py-8">
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <p className="ml-3 text-lg">Loading research...</p>
+      </div>
+    </div>
+  );
+}
+
+export default function ResearchIndex() {
+  return (
+    <Layout>
+      <Suspense fallback={<ResearchLoading />}>
+        <ResearchContent />
+      </Suspense>
     </Layout>
   );
 }
