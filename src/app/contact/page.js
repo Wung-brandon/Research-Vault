@@ -131,7 +131,7 @@ export default function ContactPage() {
             
             <h1 className="text-4xl font-bold mb-4">Get in Touch</h1>
             <p className="text-xl  max-w-3xl mx-auto">
-            Have questions or feedback? We'd love to hear from you. Reach out to our team using any of the methods below.
+            Have questions or feedback? We&apos;d love to hear from you. Reach out to our team using any of the methods below.
             </p>
         </motion.div>
 
@@ -180,7 +180,7 @@ export default function ContactPage() {
                     className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-lg mb-6"
                     >
                     <h3 className="font-bold text-lg mb-2">Message Sent!</h3>
-                    <p>Thank you for reaching out. We'll get back to you as soon as possible.</p>
+                    <p>Thank you for reaching out. We&apos;ll get back to you as soon as possible.</p>
                     </motion.div>
                 ) : (
                     <form onSubmit={handleSubmit}>

@@ -97,7 +97,7 @@ export default function DepartmentsPage() {
             </div>
             <h3 className="text-xl font-semibold mb-2">No departments found</h3>
             <p className="text-gray-600 mb-4">
-              We couldn't find any departments matching "{searchTerm}".
+              We couldn&apos;t find any departments matching &quot;{searchTerm}&quot;.
             </p>
             <button 
               onClick={() => setSearchTerm('')} 

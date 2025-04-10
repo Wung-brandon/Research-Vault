@@ -1,73 +1,91 @@
-"use client"
-
+// /components/ui/DownloadButton.jsx
 import { useState } from 'react';
 import { Download } from 'lucide-react';
-import { toast } from 'react-hot-toast';
-import { saveAs } from 'file-saver';
+import { generateResearchPDF, generateSimpleResearchPDF } from '@/utils/pdfGenerator';
 
-/**
- * Reusable PDF download button component
- * @param {Object} props - Component props
- * @param {string} props.pdfUrl - URL of the PDF to download
- * @param {string} props.filename - Filename to save as
- * @param {string} props.className - Additional classes for the button
- * @param {boolean} props.withText - Whether to show text alongside icon
- * @param {string} props.buttonVariant - Button style variant ('primary', 'outline', 'ghost')
- * @param {boolean} props.fallbackData - Use fallback sample PDF data if real PDF fails to load
- */
 export default function DownloadButton({ 
-  pdfUrl, 
   filename, 
-  className = "",
-  withText = true,
-  buttonVariant = "primary",
-  fallbackData = true
+  buttonVariant = 'primary',
+  research = null,
+  elementId = null,
+  fallbackData = false
 }) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   
-  // Define button classes based on variant
-  const buttonClasses = {
-    primary: "btn-primary",
-    outline: "btn-outline",
-    ghost: "btn-ghost"
-  };
-
   const handleDownload = async () => {
-    setIsLoading(true);
-    
     try {
-      if (fallbackData) {
-        // Create a simple fallback PDF blob
-        const pdfContent = "%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj 2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj 3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Resources<<>>/Contents 4 0 R/Parent 2 0 R>>endobj 4 0 obj<</Length 89>>stream\nBT\n/F1 12 Tf\n100 700 Td\n(Sample PDF document - the requested PDF could not be loaded.) Tj\nET\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f\n0000000009 00000 n\n0000000056 00000 n\n0000000111 00000 n\n0000000212 00000 n\ntrailer<</Size 5/Root 1 0 R>>\nstartxref\n350\n%%EOF";
+      setIsDownloading(true);
+      
+      // If research data is provided, use our PDF generator
+      if (research) {
+        // Use the simple version that avoids DOM capture to prevent oklch color errors
+        await generateSimpleResearchPDF(research, filename);
+      } 
+      // Otherwise use the standard download approach (fetch the PDF)
+      else if (!fallbackData) {
+        const response = await fetch(`/pdfs/${filename}`);
         
-        const blob = new Blob([pdfContent], { type: 'application/pdf' });
-        saveAs(blob, filename || 'sample.pdf');
-        toast.success('Sample PDF downloaded');
-      } else {
-        // Show error if no fallback is enabled
-        toast.error('PDF is not available for download');
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
+        } else {
+          throw new Error('PDF not found');
+        }
+      } 
+      // Use fallback sample data
+      else {
+        // Create a sample research object if research data not provided
+        const sampleResearch = {
+          title: "Sample Research Paper",
+          student: "Student Name",
+          supervisor: "Supervisor Name",
+          department: "Sample Department",
+          year: new Date().getFullYear(),
+          abstract: "This is a sample abstract for demonstration purposes. The actual research content is not available for download at this time.",
+          methodology: "Sample methodology section would go here, describing the research methods used.",
+          findings: "Sample findings section, outlining the key discoveries of the research.",
+          keywords: ["sample", "research", "demonstration"]
+        };
+        
+        await generateResearchPDF(fallbackData === true ? research || sampleResearch : fallbackData, filename);
       }
     } catch (error) {
-      console.error('Download failed:', error);
-      toast.error('Could not generate PDF for download');
+      console.error('Download error:', error);
+      alert('Failed to download the file. Please try again later.');
     } finally {
-      setIsLoading(false);
+      setIsDownloading(false);
     }
   };
-
+  
+  const buttonClass = buttonVariant === 'primary' 
+    ? 'btn-primary cursor-pointer flex items-center' 
+    : 'btn-outline cursor-pointer flex items-center';
+  
   return (
     <button 
-      className={`${buttonClasses[buttonVariant] || 'btn-primary'} flex items-center cursor-pointer ${className} ${isLoading ? 'opacity-70 cursor-pointer' : ''}`}
+      className={buttonClass}
       onClick={handleDownload}
-      disabled={isLoading}
+      disabled={isDownloading}
       aria-label="Download PDF"
     >
-      {isLoading ? (
-        <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-current mr-2"></div>
+      {isDownloading ? (
+        <>
+          <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-current mr-2"></div>
+          Downloading...
+        </>
       ) : (
-        <Download size={16} className={withText ? "mr-2" : ""} />
+        <>
+          <Download size={16} className="mr-2" />
+          Download PDF
+        </>
       )}
-      {withText && "Download PDF"}
     </button>
   );
 }

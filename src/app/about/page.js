@@ -176,7 +176,7 @@ export default function AboutPage() {
       >
         <h2 className="text-2xl font-bold mb-4">Join Our Community</h2>
         <p className="text-lg mb-6 max-w-2xl mx-auto">
-          Whether you're a student looking to showcase your research, an educator seeking to inspire your students, 
+          Whether you&apos;re a student looking to showcase your research, an educator seeking to inspire your students, 
           or simply a curious mind exploring new ideas, ResearchVault welcomes you.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">

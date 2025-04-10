@@ -302,7 +302,7 @@ export default function DepartmentDetailPage() {
           <div className="max-w-lg mx-auto bg-white rounded-xl shadow-sm p-8">
             <h2 className="text-2xl font-bold text-red-500 mb-4">Department Not Found</h2>
             <p className="text-gray-600 mb-8">
-              We couldn't find the department you're looking for. It may have been moved or deleted.
+              We couldn&apos;t find the department you&apos;re looking for. It may have been moved or deleted.
             </p>
             <Link 
               href="/departments" 

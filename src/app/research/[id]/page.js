@@ -196,18 +196,26 @@ export default function ResearchDetail() {
                       <p className="text-yellow-800 font-medium">PDF Preview Unavailable</p>
                       <p className="text-yellow-700 text-sm mt-1">
                         The PDF file for this research is currently unavailable. 
-                        Please contact the university library for assistance.
+                        You can generate a PDF using the button below.
                       </p>
                     </div>
                   </div>
                 )}
                 
                 <div className="flex flex-wrap gap-4">
-                <DownloadButton 
-                  filename={pdfFilename}
-                  buttonVariant="primary"
-                  fallbackData={true} // Always use fallback
-                />
+                  {pdfExists ? (
+                    <DownloadButton 
+                      filename={pdfFilename}
+                      buttonVariant="primary"
+                    />
+                  ) : (
+                    <DownloadButton 
+                      filename={pdfFilename}
+                      buttonVariant="primary"
+                      research={research}
+                      // Removed elementId to avoid DOM capture that causes oklch error
+                    />
+                  )}
                   
                   <ShareMenu 
                     title={research.title}
@@ -224,28 +232,27 @@ export default function ResearchDetail() {
                     pdfUrl={pdfUrl}
                   />
                 </div>
-                ) : (
-                  <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-                    <div className="p-4 rounded-full bg-gray-100 inline-flex mb-4">
-                      <AlertCircle size={32} className="text-gray-400" />
-                    </div>
-                    <h3 className="text-xl font-medium mb-2">PDF Preview Unavailable</h3>
-                    <p className="text-gray-600 max-w-md mx-auto mb-6">
-                      The PDF document for this research paper is not currently available for preview.
-                      You may download a sample document instead.
-                    </p>
-                    <button 
-                      className="btn-primary"
-                      onClick={() => {
-                        // Trigger the sample download
-                        const downloadBtn = document.querySelector('[aria-label="Download PDF"]');
-                        if (downloadBtn) downloadBtn.click();
-                      }}
-                    >
-                      Download Sample
-                    </button>
+              ) : (
+                <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+                  <div className="p-4 rounded-full bg-gray-100 inline-flex mb-4">
+                    <AlertCircle size={32} className="text-gray-400" />
                   </div>
-                )}
+                  <h3 className="text-xl font-medium mb-2">PDF Preview Unavailable</h3>
+                  <p className="text-gray-600 max-w-md mx-auto mb-6">
+                    The PDF document for this research paper is not currently available for preview.
+                    You can generate a PDF using the button above.
+                  </p>
+                  <button 
+                    className="btn-primary cursor-pointer"
+                    onClick={() => {
+                      const downloadBtn = document.querySelector('[aria-label="Download PDF"]');
+                      if (downloadBtn) downloadBtn.click();
+                    }}
+                  >
+                    Generate PDF
+                  </button>
+                </div>
+              )}
             </motion.div>
           </div>
           
