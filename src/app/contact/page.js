@@ -86,13 +86,13 @@ export default function ContactPage() {
     {
       icon: <Phone size={24} />,
       title: "Call Us",
-      details: "(555) 123-4567",
+      details: "(+237) 676325938",
       description: "Monday to Friday, 9am to 5pm EST"
     },
     {
       icon: <MapPin size={24} />,
       title: "Visit Us",
-      details: "123 Academic Boulevard, Education City, CA 94105",
+      details: "University of Buea, Buea SW",
       description: "Our main office location"
     },
   ];
@@ -219,7 +219,7 @@ export default function ContactPage() {
                     
                     <div className="mb-6">
                         <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">
-                        Subject
+                        Department
                         </label>
                         <input 
                         type="text" 
@@ -371,9 +371,9 @@ export default function ContactPage() {
                 <input 
                     type="email" 
                     placeholder="Your email address"
-                    className="px-4 py-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-white"
+                    className="px-4 py-3 rounded-lg w-full border-1 border-white focus:outline-none focus:ring-2 focus:ring-white"
                 />
-                <button className="btn-white whitespace-nowrap">
+                <button className="btn-white cursor-pointer border-2 border-white p-3 rounded-xl whitespace-nowrap">
                     Subscribe Now
                 </button>
                 </div>

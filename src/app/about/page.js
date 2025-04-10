@@ -180,10 +180,10 @@ export default function AboutPage() {
           or simply a curious mind exploring new ideas, ResearchVault welcomes you.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
-          <Link href="/research" className="btn-white">
+          <Link href="/research" className="btn-white border-1 border-white p-3 rounded-xl">
             Explore Research
           </Link>
-          <Link href="/contact" className="btn-outline-white">
+          <Link href="/contact" className="btn-outline-white border-1 border-white p-3 rounded-xl">
             Contact Us
           </Link>
         </div>

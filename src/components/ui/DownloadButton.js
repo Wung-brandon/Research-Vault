@@ -8,21 +8,18 @@ export default function DownloadButton({
   buttonVariant = 'primary',
   research = null,
   elementId = null,
-  fallbackData = false
+  fallbackData = false,
+  iconOnly = false  // 👈 New prop
 }) {
   const [isDownloading, setIsDownloading] = useState(false);
   
   const handleDownload = async () => {
     try {
       setIsDownloading(true);
-      
-      // If research data is provided, use our PDF generator
+
       if (research) {
-        // Use the simple version that avoids DOM capture to prevent oklch color errors
         await generateSimpleResearchPDF(research, filename);
-      } 
-      // Otherwise use the standard download approach (fetch the PDF)
-      else if (!fallbackData) {
+      } else if (!fallbackData) {
         const response = await fetch(`/pdfs/${filename}`);
         
         if (response.ok) {
@@ -38,22 +35,19 @@ export default function DownloadButton({
         } else {
           throw new Error('PDF not found');
         }
-      } 
-      // Use fallback sample data
-      else {
-        // Create a sample research object if research data not provided
+      } else {
         const sampleResearch = {
           title: "Sample Research Paper",
           student: "Student Name",
           supervisor: "Supervisor Name",
           department: "Sample Department",
           year: new Date().getFullYear(),
-          abstract: "This is a sample abstract for demonstration purposes. The actual research content is not available for download at this time.",
-          methodology: "Sample methodology section would go here, describing the research methods used.",
-          findings: "Sample findings section, outlining the key discoveries of the research.",
+          abstract: "This is a sample abstract for demonstration purposes.",
+          methodology: "Sample methodology section.",
+          findings: "Sample findings section.",
           keywords: ["sample", "research", "demonstration"]
         };
-        
+
         await generateResearchPDF(fallbackData === true ? research || sampleResearch : fallbackData, filename);
       }
     } catch (error) {
@@ -64,9 +58,11 @@ export default function DownloadButton({
     }
   };
   
-  const buttonClass = buttonVariant === 'primary' 
-    ? 'btn-primary cursor-pointer flex items-center' 
-    : 'btn-outline cursor-pointer flex items-center';
+  const buttonClass = iconOnly
+    ? 'p-2 rounded-full cursor-pointer hover:bg-gray-100 transition-colors disabled:opacity-50'
+    : buttonVariant === 'primary'
+      ? 'btn-primary cursor-pointer flex items-center'
+      : 'btn-outline cursor-pointer flex items-center';
   
   return (
     <button 
@@ -76,15 +72,23 @@ export default function DownloadButton({
       aria-label="Download PDF"
     >
       {isDownloading ? (
-        <>
-          <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-current mr-2"></div>
-          Downloading...
-        </>
+        iconOnly ? (
+          <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-current"></div>
+        ) : (
+          <>
+            <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-current mr-2"></div>
+            Downloading...
+          </>
+        )
       ) : (
-        <>
-          <Download size={16} className="mr-2" />
-          Download PDF
-        </>
+        iconOnly ? (
+          <Download size={18} />
+        ) : (
+          <>
+            <Download size={16} className="mr-2" />
+            Download PDF
+          </>
+        )
       )}
     </button>
   );

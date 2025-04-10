@@ -14,6 +14,8 @@ export default function ResearchDetail() {
   const params = useParams();
   const id = params.id;
   const [pdfExists, setPdfExists] = useState(true);
+
+  const [currentUrl, setCurrentUrl] = useState('');
   
   // Find the research by ID
   const research = allResearch.find(item => item.id === id);
@@ -54,6 +56,14 @@ export default function ResearchDetail() {
     
     checkPdfExists();
   }, [pdfUrl]);
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentUrl(`${process.env.NEXT_PUBLIC_BASE_URL || window.location.origin}/research/${research.id}`);
+    }
+  }, [research.id]);
+
   
   // Find related research from the same department
   const relatedResearch = allResearch
@@ -64,20 +74,21 @@ export default function ResearchDetail() {
     <Layout>
       <div className="container-custom py-8">
         {/* Breadcrumb */}
-        <nav className="flex mb-6">
-          <ol className="flex items-center space-x-2 text-sm text-gray-600">
-            <li>
+        <nav className="mb-6 overflow-hidden">
+          <ol className="flex flex-wrap items-center text-sm text-gray-600">
+            <li className="flex-shrink-0">
               <Link href="/" className="hover:text-blue-600">Home</Link>
             </li>
-            <li className="px-2">/</li>
-            <li>
+            <li className="px-2 flex-shrink-0">/</li>
+            <li className="flex-shrink-0">
               <Link href="/research" className="hover:text-blue-600">Research</Link>
             </li>
-            <li className="px-2">/</li>
-            <li className="text-gray-900 font-medium truncate">{research.title}</li>
+            <li className="px-2 flex-shrink-0">/</li>
+            <li className="text-gray-900 font-medium truncate max-w-[calc(100%-150px)]" title={research.title}>
+              {research.title}
+            </li>
           </ol>
         </nav>
-        
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="lg:w-2/3">
             <motion.div
@@ -217,11 +228,13 @@ export default function ResearchDetail() {
                     />
                   )}
                   
-                  <ShareMenu 
-                    title={research.title}
-                    url={`${process.env.NEXT_PUBLIC_BASE_URL || window.location.origin}/research/${research.id}`}
-                    buttonVariant="outline"
-                  />
+                  {currentUrl && (
+                    <ShareMenu
+                      title={research.title}
+                      url={currentUrl}
+                      buttonVariant="outline"
+                    />
+                    )}  
                 </div>
               </div>
               

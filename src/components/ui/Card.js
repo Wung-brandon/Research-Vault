@@ -1,12 +1,25 @@
 // components/ui/Card.js
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Download, Share2, FileText } from 'lucide-react';
+import { FileText } from 'lucide-react';
+import DownloadButton from '@/components/ui/DownloadButton';
+import ShareMenu from '@/components/ui/ShareMenu';
 
 export default function ResearchCard({ research }) {
   const [isHovered, setIsHovered] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState('');
+  
+  // Create PDF filename
+  const pdfFilename = `${research.student} - ${research.title} (${research.year}).pdf`;
+  
+  // Set up current URL for sharing
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentUrl(`${process.env.NEXT_PUBLIC_BASE_URL || window.location.origin}/research/${research.id}`);
+    }
+  }, [research.id]);
   
   const cardVariants = {
     hover: {
@@ -64,32 +77,34 @@ export default function ResearchCard({ research }) {
           href={`/research/${research.id}`}
           className="text-blue-600 font-medium text-sm hover:underline flex items-center"
         >
-          <FileText size={16} className="mr-1" />
+          <motion.span
+            variants={iconVariants}
+            animate={isHovered ? "hover" : "initial"}
+          >
+            <FileText size={16} className="mr-1" />
+          </motion.span>
           View Details
         </Link>
         
         <div className="flex space-x-2">
-          <motion.button
-            className="p-2 rounded-full hover:bg-gray-100"
-            variants={iconVariants}
-            whileHover="hover"
-            title="Download PDF"
-          >
-            <Download size={16} className="text-gray-600" />
-          </motion.button>
+          {/* Replace the custom button with your DownloadButton component */}
+          <DownloadButton 
+            filename={`${research.title}.pdf`} 
+            research={research}
+            iconOnly={true} // 👈 Use iconOnly variant
+          />
           
-          <motion.button
-            className="p-2 rounded-full hover:bg-gray-100"
-            variants={iconVariants}
-            whileHover="hover"
-            title="Share"
-          >
-            <Share2 size={16} className="text-gray-600" />
-          </motion.button>
+          {/* Replace the custom share button with your ShareMenu component */}
+          {currentUrl && (
+            <ShareMenu
+              title={research.title}
+              url={currentUrl}
+              buttonVariant="ghost" // Use a minimal button style
+              className="p-2"
+          />
+          )}
         </div>
       </div>
     </motion.div>
   );
 }
-
-
