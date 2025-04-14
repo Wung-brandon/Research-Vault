@@ -80,7 +80,7 @@ export default function ContactPage() {
     {
       icon: <Mail size={24} />,
       title: "Email Us",
-      details: "info@researchvault.edu",
+      details: "info@fhsresearchlibrary.edu",
       description: "For general inquiries and information"
     },
     {
@@ -92,7 +92,7 @@ export default function ContactPage() {
     {
       icon: <MapPin size={24} />,
       title: "Visit Us",
-      details: "University of Buea, Buea SW",
+      details: "University of Buea, Faculty Of Health Sciences",
       description: "Our main office location"
     },
   ];
@@ -104,11 +104,11 @@ export default function ContactPage() {
     },
     {
       question: "Is there a cost to access the research papers?",
-      answer: "No, ResearchVault is completely free to use. Our mission is to make academic research accessible to everyone."
+      answer: "No, FHS Research Library is completely free to use. Our mission is to make academic research accessible to everyone."
     },
     {
-      question: "Can I cite research papers from ResearchVault?",
-      answer: "Yes, all papers on ResearchVault can be cited according to standard academic citation formats. Each paper includes a recommended citation format."
+      question: "Can I cite research papers from FHS Research Library?",
+      answer: "Yes, all papers on FHS Research Library can be cited according to standard academic citation formats. Each paper includes a recommended citation format."
     },
     {
       question: "Do you accept research from all academic disciplines?",
@@ -306,7 +306,7 @@ export default function ContactPage() {
                     </p>
                     <div className="flex items-center text-blue-600 font-medium">
                     <Phone size={18} className="mr-2" />
-                    (555) 987-6543
+                    (+237) 676325938
                     </div>
                 </div>
                 </motion.div>
@@ -365,7 +365,7 @@ export default function ContactPage() {
             >
                 <h2 className="text-2xl font-bold mb-4">Stay Updated</h2>
                 <p className="text-lg mb-6 max-w-2xl mx-auto">
-                Subscribe to our newsletter to receive updates on new research papers, academic events, and ResearchVault news.
+                Subscribe to our newsletter to receive updates on new research papers, academic events, and FHS Research Library news.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
                 <input 

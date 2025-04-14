@@ -60,7 +60,7 @@ export default function AboutPage() {
         className="text-center mb-16 py-16 md:py-24 bg-gradient-to-r from-blue-700 to-blue-900 text-white"
       >
         
-        <h1 className="text-4xl font-bold mb-4">About ResearchVault</h1>
+        <h1 className="text-4xl font-bold mb-4">About Faculty of Health Sciences(FHS) Research Library</h1>
         <p className="text-xl max-w-3xl mx-auto">
           A centralized platform dedicated to showcasing and preserving exceptional student research across diverse academic disciplines.
         </p>
@@ -96,7 +96,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
                 <p className="text-lg text-gray-700 mb-4">
-                ResearchVault was founded in 2023 with a vision to address a critical gap in academia: 
+                Faculty of Health Sciences(FHS) Research Library was founded in 1993 with a vision to address a critical gap in academia: 
                 the lack of visibility for exceptional student research. Too often, brilliant undergraduate and 
                 graduate research papers would be submitted, graded, and then forgotten.
                 </p>
@@ -106,7 +106,7 @@ export default function AboutPage() {
                 deserved broader recognition and preservation.
                 </p>
                 <p className="text-lg text-gray-700">
-                Today, ResearchVault serves as a growing repository of outstanding student research from 
+                Today, FHS Research Library serves as a growing repository of outstanding student research from 
                 institutions worldwide, spanning diverse fields from humanities to hard sciences, making this 
                 knowledge accessible to students, educators, and curious minds everywhere.
                 </p>
@@ -177,7 +177,7 @@ export default function AboutPage() {
         <h2 className="text-2xl font-bold mb-4">Join Our Community</h2>
         <p className="text-lg mb-6 max-w-2xl mx-auto">
           Whether you&apos;re a student looking to showcase your research, an educator seeking to inspire your students, 
-          or simply a curious mind exploring new ideas, ResearchVault welcomes you.
+          or simply a curious mind exploring new ideas, FHS Research Library welcomes you.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
           <Link href="/research" className="btn-white border-1 border-white p-3 rounded-xl">

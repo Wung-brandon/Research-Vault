@@ -20,7 +20,8 @@ function ResearchContent() {
   const [sortBy, setSortBy] = useState('newest');
   const [filters, setFilters] = useState({
     years: [],
-    department: deptParam || ''
+    department: deptParam || '',
+    supervisors: []
   });
   
   const [filteredResearch, setFilteredResearch] = useState([]);
@@ -65,6 +66,13 @@ function ResearchContent() {
       results = results.filter(item => filters.years.includes(item.year));
     }
     
+    // Apply supervisor filters
+    if (filters.supervisors.length > 0) {
+      results = results.filter(item => 
+        filters.supervisors.includes(item.supervisor)
+      );
+    }
+    
     // Apply sorting
     if (sortBy === 'newest') {
       results.sort((a, b) => b.year - a.year);
@@ -86,6 +94,19 @@ function ResearchContent() {
           ? prev.years.filter(y => y !== value)
           : [...prev.years, value];
         return { ...prev, years };
+      });
+    } else if (type === 'supervisor') {
+      setFilters(prev => {
+        const supervisors = prev.supervisors.includes(value)
+          ? prev.supervisors.filter(s => s !== value)
+          : [...prev.supervisors, value];
+        return { ...prev, supervisors };
+      });
+    } else if (type === 'clearAll') {
+      setFilters({
+        years: [],
+        department: '',
+        supervisors: []
       });
     }
   };
@@ -178,7 +199,7 @@ function ResearchContent() {
               <button 
                 onClick={() => {
                   setSearchQuery('');
-                  setFilters({ years: [], department: '' });
+                  setFilters({ years: [], supervisors: [], department: '' });
                   router.push('/research');
                 }}
                 className="btn-outline"

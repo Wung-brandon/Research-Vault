@@ -11,7 +11,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center mb-4">
               <Book size={24} className="text-blue-400" />
-              <span className="ml-2 text-xl font-bold">ResearchVault</span>
+              <span className="ml-2 text-xl font-bold">FHS Research Library</span>
             </div>
             <p className="text-gray-400 mb-4">
               A digital library housing student research works from various academic fields, 
@@ -30,19 +30,19 @@ export default function Footer() {
                   Home
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/research" className="text-gray-400 hover:text-white transition-colors">
                   Research Works
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link href="/departments" className="text-gray-400 hover:text-white transition-colors">
-                  Departments
+                  Find Thesis
                 </Link>
               </li>
               <li>
                 <Link href="/research" className="text-gray-400 hover:text-white transition-colors">
-                  Research
+                  Find Publication
                 </Link>
               </li>
               <li>
@@ -63,7 +63,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li className="flex items-center">
                 <Mail size={16} className="mr-2 text-gray-400" />
-                <span className="text-gray-400">support@researchvault.edu</span>
+                <span className="text-gray-400">support@fhsresearchlibrary.edu</span>
               </li>
               <li className="flex items-center">
                 <Phone size={16} className="mr-2 text-gray-400" />
@@ -71,14 +71,14 @@ export default function Footer() {
               </li>
               <li className="flex items-center">
                 <MapPin size={16} className="mr-2 text-gray-400" />
-                <span className="text-gray-400">University Campus, Innovate City</span>
+                <span className="text-gray-400">University Campus, Faculty Of Health Sciences</span>
               </li>
             </ul>
           </div>
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} ResearchVault. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} FHS Research Library. All rights reserved.</p>
         </div>
       </div>
     </footer>

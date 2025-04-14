@@ -35,7 +35,7 @@ export default function Header() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                ResearchVault
+                FHS Research Library
               </motion.span>
             </Link>
           </div>
@@ -43,8 +43,8 @@ export default function Header() {
           {/* Desktop Navigation - Right Aligned */}
           <nav className="hidden md:flex items-center space-x-1">
             <Link href="/" className={linkClass('/')}>Home</Link>
-            <Link href="/departments" className={linkClass('/departments')}>Departments</Link>
-            <Link href="/research" className={linkClass('/research')}>Research</Link>
+            <Link href="/departments" className={linkClass('/departments')}>Find Theses</Link>
+            <Link href="/research" className={linkClass('/research')}>Find Publication</Link>
             <Link href="/about" className={linkClass('/about')}>About</Link>
             <Link href="/contact" className={linkClass('/contact')}>Contact</Link>
           </nav>
@@ -74,8 +74,8 @@ export default function Header() {
           <div className="container-custom py-2">
             <nav className="flex flex-col">
               <Link href="/" className={linkClass('/', true)} onClick={() => setIsMenuOpen(false)}>Home</Link>
-              <Link href="/departments" className={linkClass('/departments', true)} onClick={() => setIsMenuOpen(false)}>Departments</Link>
-              <Link href="/research" className={linkClass('/research', true)} onClick={() => setIsMenuOpen(false)}>Research</Link>
+              <Link href="/departments" className={linkClass('/departments', true)} onClick={() => setIsMenuOpen(false)}>Find Theses</Link>
+              <Link href="/research" className={linkClass('/research', true)} onClick={() => setIsMenuOpen(false)}>Find Publication</Link>
               <Link href="/about" className={linkClass('/about', true)} onClick={() => setIsMenuOpen(false)}>About</Link>
               <Link href="/contact" className={linkClass('/contact', true)} onClick={() => setIsMenuOpen(false)}>Contact</Link>
             </nav>
