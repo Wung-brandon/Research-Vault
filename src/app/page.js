@@ -10,7 +10,7 @@ import { departments } from '@/data/departments';
 import Layout from '@/components/layout/Layout';
 import HeroSection from '@/components/sections/HeroSection';
 import SearchBar from '@/components/ui/SearchBarHome';
-import UserSidebar from '@/components/ui/UserSidebar';
+import UserSidebar from '@/components/ui/UserSideBarUI';
 
 export default function Home() {
   const [showSidebar, setShowSidebar] = useState(true);
