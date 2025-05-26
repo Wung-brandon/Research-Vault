@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-and-test:
-    runsself-hosted
+    runs-on: self-hosted
 
     steps:
       - name: Checkout code
