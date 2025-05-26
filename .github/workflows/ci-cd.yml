@@ -34,6 +34,7 @@ jobs:
           docker build -t research-app:latest .
 
       - name: Test Docker container
+        shell: bash
         run: |
           # Stop existing container if running
           docker stop research-app-test || true
