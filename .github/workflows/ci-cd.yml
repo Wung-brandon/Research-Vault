@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runsself-hosted
 
     steps:
       - name: Checkout code
@@ -53,7 +53,7 @@ jobs:
           docker rm research-app-test
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build-and-test
     if: github.ref == 'refs/heads/main'
 
