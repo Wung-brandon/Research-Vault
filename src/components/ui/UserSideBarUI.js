@@ -10,7 +10,7 @@ export default function UserSidebar({ userData }) {
   };
 
   return (
-    <div className="bg-white border fixed border-gray-200 rounded-lg shadow-sm h-full p-4 sticky top-4">
+    <div className="bg-white border border-gray-200 rounded-lg shadow-sm h-full p-4 sticky top-4">
       {/* User Profile */}
       <div className="text-center mb-6">
         <h3 className="font-bold text-lg">{userData.name}</h3>

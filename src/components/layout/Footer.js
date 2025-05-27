@@ -11,7 +11,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center mb-4">
               <Book size={24} className="text-blue-400" />
-              <span className="ml-2 text-xl font-bold">FHS Research Library</span>
+              <span className="ml-2 text-xl font-bold">ResearchVault</span>
             </div>
             <p className="text-gray-400 mb-4">
               A digital library housing student research works from various academic fields, 
@@ -63,7 +63,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li className="flex items-center">
                 <Mail size={16} className="mr-2 text-gray-400" />
-                <span className="text-gray-400">support@fhsresearchlibrary.edu</span>
+                <span className="text-gray-400">support@researchvault.edu</span>
               </li>
               <li className="flex items-center">
                 <Phone size={16} className="mr-2 text-gray-400" />
@@ -78,7 +78,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} FHS Research Library. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} ResearchVault. All rights reserved.</p>
         </div>
       </div>
     </footer>
