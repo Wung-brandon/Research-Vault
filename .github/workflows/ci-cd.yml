@@ -39,42 +39,41 @@ jobs:
           # Stop existing container if running
           docker stop research-app-test 2>$null
           if ($LASTEXITCODE -ne 0) { Write-Host "No existing test container to stop" }
-          docker rm research-app-test 2>$null  
+          docker rm research-app-test 2>$null
           if ($LASTEXITCODE -ne 0) { Write-Host "No existing test container to remove" }
-          
+
           # Run new container for testing
-          Write-Host "🚀 Starting test container..."
+          Write-Host "Starting test container..."
           docker run -d --name research-app-test -p 3001:3000 research-app:latest
-          
+
           if ($LASTEXITCODE -ne 0) {
             Write-Error "Failed to start test container"
             exit 1
           }
-          
+
           # Wait for container to start
-          Write-Host "⏳ Waiting for container to start..."
+          Write-Host "Waiting for container to start..."
           Start-Sleep -Seconds 15
-          
+
           # Test if the application is responding
-          Write-Host "🧪 Testing application response..."
+          Write-Host "Testing application response..."
           try {
             $response = Invoke-WebRequest -Uri "http://localhost:3001" -UseBasicParsing -TimeoutSec 30
-            Write-Host "✅ Container test successful - Status: $($response.StatusCode)"
+            Write-Host "Container test successful - Status: $($response.StatusCode)"
           } catch {
-            Write-Host "❌ Container test failed: $($_.Exception.Message)"
-            Write-Host "📋 Container logs:"
+            Write-Host "Container test failed: $($_.Exception.Message)"
+            Write-Host "Container logs:"
             docker logs research-app-test
             docker stop research-app-test 2>$null
             docker rm research-app-test 2>$null
             exit 1
           }
-          
+
           # Clean up test container
-          Write-Host "🧹 Cleaning up test container..."
+          Write-Host "Cleaning up test container..."
           docker stop research-app-test
           docker rm research-app-test
-          Write-Host "✅ Test completed successfully"
-
+          Write-Host "Test completed successfully"
   deploy:
     runs-on: self-hosted
     needs: build-and-test
