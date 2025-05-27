@@ -101,11 +101,14 @@ jobs:
           
           Write-Host "🚀 Deploying to local production..."
           
-          # Stop existing production container if running
-          docker stop research-app 2>$null
-          if ($LASTEXITCODE -ne 0) { Write-Host "No existing production container to stop" }
-          docker rm research-app 2>$null
-          if ($LASTEXITCODE -ne 0) { Write-Host "No existing production container to remove" }
+          # Stop and remove existing production container if it exists
+          if (docker ps -a --format '{{.Names}}' | Select-String -Pattern '^research-app$') {
+            docker stop research-app | Out-Null
+            docker rm research-app | Out-Null
+            Write-Host "Old production container stopped and removed."
+          } else {
+            Write-Host "No existing production container to stop or remove."
+          }
           
           # Run new production container
           docker run -d --name research-app -p 3000:3000 --restart unless-stopped research-app:production
