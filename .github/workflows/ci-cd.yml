@@ -34,20 +34,27 @@ jobs:
           docker build -t research-app:latest .
 
       - name: Test Docker container
-        shell: bash
+        shell: pwsh
         run: |
           # Stop existing container if running
-          docker stop research-app-test || true
-          docker rm research-app-test || true
+          docker stop research-app-test 2>$null || $true
+          docker rm research-app-test 2>$null || $true
           
           # Run new container for testing
           docker run -d --name research-app-test -p 3001:3000 research-app:latest
           
           # Wait for container to start
-          sleep 10
+          Start-Sleep -Seconds 10
           
-          # Test if the application is responding
-          curl -f http://localhost:3001 || exit 1
+          # Test if the application is responding (PowerShell equivalent)
+          try {
+            $response = Invoke-WebRequest -Uri "http://localhost:3001" -UseBasicParsing -TimeoutSec 30
+            Write-Host "✅ Container test successful - Status: $($response.StatusCode)"
+          } catch {
+            Write-Error "❌ Container test failed: $_"
+            docker logs research-app-test
+            exit 1
+          }
           
           # Clean up test container
           docker stop research-app-test
@@ -63,24 +70,32 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build and deploy Docker container
+        shell: pwsh
         run: |
-          echo "🏗️ Building production Docker image..."
+          Write-Host "🏗️ Building production Docker image..."
           docker build -t research-app:production .
           
-          echo "🚀 Deploying to local production..."
+          Write-Host "🚀 Deploying to local production..."
           
           # Stop existing production container if running
-          docker stop research-app || true
-          docker rm research-app || true
+          docker stop research-app 2>$null || $true
+          docker rm research-app 2>$null || $true
           
           # Run new production container
           docker run -d --name research-app -p 3000:3000 --restart unless-stopped research-app:production
           
-          echo "✅ Deployment complete!"
-          echo "🌐 Application available at http://localhost:3000"
+          Write-Host "✅ Deployment complete!"
+          Write-Host "🌐 Application available at http://localhost:3000"
 
       - name: Verify deployment
+        shell: pwsh
         run: |
-          sleep 10
-          curl -f http://localhost:3000 || exit 1
-          echo "✅ Deployment verification successful!"
+          Start-Sleep -Seconds 10
+          try {
+            $response = Invoke-WebRequest -Uri "http://localhost:3000" -UseBasicParsing -TimeoutSec 30
+            Write-Host "✅ Deployment verification successful - Status: $($response.StatusCode)"
+          } catch {
+            Write-Error "❌ Deployment verification failed: $_"
+            docker logs research-app
+            exit 1
+          }
