@@ -34,31 +34,46 @@ jobs:
           docker build -t research-app:latest .
 
       - name: Test Docker container
-        shell: pwsh
+        shell: powershell
         run: |
           # Stop existing container if running
-          docker stop research-app-test 2>$null || $true
-          docker rm research-app-test 2>$null || $true
+          docker stop research-app-test 2>$null
+          if ($LASTEXITCODE -ne 0) { Write-Host "No existing test container to stop" }
+          docker rm research-app-test 2>$null  
+          if ($LASTEXITCODE -ne 0) { Write-Host "No existing test container to remove" }
           
           # Run new container for testing
+          Write-Host "🚀 Starting test container..."
           docker run -d --name research-app-test -p 3001:3000 research-app:latest
           
-          # Wait for container to start
-          Start-Sleep -Seconds 10
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "Failed to start test container"
+            exit 1
+          }
           
-          # Test if the application is responding (PowerShell equivalent)
+          # Wait for container to start
+          Write-Host "⏳ Waiting for container to start..."
+          Start-Sleep -Seconds 15
+          
+          # Test if the application is responding
+          Write-Host "🧪 Testing application response..."
           try {
             $response = Invoke-WebRequest -Uri "http://localhost:3001" -UseBasicParsing -TimeoutSec 30
             Write-Host "✅ Container test successful - Status: $($response.StatusCode)"
           } catch {
-            Write-Error "❌ Container test failed: $_"
+            Write-Host "❌ Container test failed: $($_.Exception.Message)"
+            Write-Host "📋 Container logs:"
             docker logs research-app-test
+            docker stop research-app-test 2>$null
+            docker rm research-app-test 2>$null
             exit 1
           }
           
           # Clean up test container
+          Write-Host "🧹 Cleaning up test container..."
           docker stop research-app-test
           docker rm research-app-test
+          Write-Host "✅ Test completed successfully"
 
   deploy:
     runs-on: self-hosted
@@ -70,32 +85,48 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build and deploy Docker container
-        shell: pwsh
+        shell: powershell
         run: |
           Write-Host "🏗️ Building production Docker image..."
           docker build -t research-app:production .
           
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "Failed to build production image"
+            exit 1
+          }
+          
           Write-Host "🚀 Deploying to local production..."
           
           # Stop existing production container if running
-          docker stop research-app 2>$null || $true
-          docker rm research-app 2>$null || $true
+          docker stop research-app 2>$null
+          if ($LASTEXITCODE -ne 0) { Write-Host "No existing production container to stop" }
+          docker rm research-app 2>$null
+          if ($LASTEXITCODE -ne 0) { Write-Host "No existing production container to remove" }
           
           # Run new production container
           docker run -d --name research-app -p 3000:3000 --restart unless-stopped research-app:production
+          
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "Failed to start production container"
+            exit 1
+          }
           
           Write-Host "✅ Deployment complete!"
           Write-Host "🌐 Application available at http://localhost:3000"
 
       - name: Verify deployment
-        shell: pwsh
+        shell: powershell
         run: |
-          Start-Sleep -Seconds 10
+          Write-Host "⏳ Waiting for deployment to stabilize..."
+          Start-Sleep -Seconds 15
+          
+          Write-Host "🔍 Verifying deployment..."
           try {
             $response = Invoke-WebRequest -Uri "http://localhost:3000" -UseBasicParsing -TimeoutSec 30
             Write-Host "✅ Deployment verification successful - Status: $($response.StatusCode)"
           } catch {
-            Write-Error "❌ Deployment verification failed: $_"
+            Write-Host "❌ Deployment verification failed: $($_.Exception.Message)"
+            Write-Host "📋 Production container logs:"
             docker logs research-app
             exit 1
           }
