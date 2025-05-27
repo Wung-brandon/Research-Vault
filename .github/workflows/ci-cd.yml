@@ -133,16 +133,17 @@ jobs:
       - name: Verify deployment
         shell: powershell
         run: |
-          Write-Host "⏳ Waiting for deployment to stabilize..."
+          Write-Host "Waiting for deployment to stabilize..."
           Start-Sleep -Seconds 15
           
-          Write-Host "🔍 Verifying deployment..."
+          Write-Host "Verifying deployment..."
           try {
             $response = Invoke-WebRequest -Uri "http://localhost:3000" -UseBasicParsing -TimeoutSec 30
-            Write-Host "✅ Deployment verification successful - Status: $($response.StatusCode)"
-          } catch {
-            Write-Host "❌ Deployment verification failed: $($_.Exception.Message)"
-            Write-Host "📋 Production container logs:"
+            Write-Host "Deployment verification successful - Status: $($response.StatusCode)"
+          }
+          catch {
+            Write-Host "Deployment verification failed: $($_.Exception.Message)"
+            Write-Host "Production container logs:"
             docker logs research-app
             exit 1
           }
