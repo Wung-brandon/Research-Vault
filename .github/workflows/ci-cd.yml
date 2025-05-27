@@ -100,7 +100,7 @@ jobs:
           }
           
           Write-Host "🚀 Deploying to local production..."
-          
+
           # Stop and remove existing production container if it exists
           if (docker ps -a --format '{{.Names}}' | Select-String -Pattern '^research-app$') {
             docker stop research-app | Out-Null
@@ -109,7 +109,16 @@ jobs:
           } else {
             Write-Host "No existing production container to stop or remove."
           }
-          
+
+          # Find and stop any container using port 3000
+          $portInUse = docker ps --format "{{.ID}}: {{.Ports}}" | Select-String "0.0.0.0:3000->"
+          if ($portInUse) {
+            $containerId = ($portInUse -split ":")[0].Trim()
+            Write-Host "Stopping container $containerId using port 3000..."
+            docker stop $containerId | Out-Null
+            docker rm $containerId | Out-Null
+          }
+
           # Run new production container
           docker run -d --name research-app -p 3000:3000 --restart unless-stopped research-app:production
           
