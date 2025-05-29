@@ -60,7 +60,7 @@ export default function AboutPage() {
         className="text-center mb-16 py-16 md:py-24 bg-gradient-to-r from-blue-700 to-blue-900 text-white"
       >
         
-        <h1 className="text-4xl font-bold mb-4">About Faculty of Health Sciences(FHS) Research Library</h1>
+        <h1 className="text-4xl font-bold mb-4">About Faculty of Health Sciences(FHS) Research Library in the University of Buea</h1>
         <p className="text-xl max-w-3xl mx-auto">
           A centralized platform dedicated to showcasing and preserving exceptional student research across diverse academic disciplines.
         </p>

@@ -39,7 +39,7 @@ const HeroSection = () => {
           className="mb-6"
         >
           <div className="bg-white/90 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-            University of Buea • Faculty of Health Sciences
+            University of Buea • Faculty of Health Sciences(FHS)
           </div>
         </motion.div>
         

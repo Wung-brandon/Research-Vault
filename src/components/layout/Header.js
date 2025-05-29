@@ -35,7 +35,7 @@ export default function Header() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                FHS Research Library
+                ResearchVault
               </motion.span>
             </Link>
           </div>

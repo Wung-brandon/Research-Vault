@@ -142,7 +142,7 @@ export default function Home() {
                 >
                   <Link 
                     href={`/departments/${dept.slug}`}
-                    className="block bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center transition-colors hover:border-blue-400 h-full flex flex-col justify-between"
+                    className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center transition-colors hover:border-blue-400 h-full flex flex-col justify-between"
                   >
                     <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mb-4">
                       <span className="text-blue-600 text-xl font-bold">{dept.name.charAt(0)}</span>

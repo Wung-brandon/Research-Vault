@@ -11,7 +11,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center mb-4">
               <Book size={24} className="text-blue-400" />
-              <span className="ml-2 text-xl font-bold">FHS Research Library</span>
+              <span className="ml-2 text-xl font-bold">ResearchVault</span>
             </div>
             <p className="text-gray-400 mb-4">
               Imagine a vibrant digital repository, not just storing, but meticulously curating the intellectual endeavors of our student scholars across the diverse landscape of academic disciplines. This isn't merely an archive; it's a dynamic testament to inquiry and discovery, a digital library meticulously designed to safeguard the burgeoning insights and rigorous research of each generation. By centralizing these scholarly works, we forge a powerful conduit for knowledge dissemination, ensuring that the fruits of academic exploration are readily accessible to current and future learners. More than that, this initiative actively cultivates and preserves our institution's academic legacy, building a rich tapestry of intellectual achievement that will inspire and inform for years to come.
@@ -62,7 +62,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li className="flex items-center">
                 <Mail size={16} className="mr-2 text-gray-400" />
-                <span className="text-gray-400">support@fhsresearchlibrary.edu</span>
+                <span className="text-gray-400">support@researchvault.edu</span>
               </li>
               <li className="flex items-center">
                 <Phone size={16} className="mr-2 text-gray-400" />
@@ -77,7 +77,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} FHS Research Library. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} ResearchVault. All rights reserved.</p>
         </div>
       </div>
     </footer>
