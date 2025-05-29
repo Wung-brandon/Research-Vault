@@ -14,8 +14,7 @@ export default function Footer() {
               <span className="ml-2 text-xl font-bold">FHS Research Library</span>
             </div>
             <p className="text-gray-400 mb-4">
-              A digital library housing student research works from various academic fields, 
-              making knowledge accessible and preserving academic legacy.
+              Imagine a vibrant digital repository, not just storing, but meticulously curating the intellectual endeavors of our student scholars across the diverse landscape of academic disciplines. This isn't merely an archive; it's a dynamic testament to inquiry and discovery, a digital library meticulously designed to safeguard the burgeoning insights and rigorous research of each generation. By centralizing these scholarly works, we forge a powerful conduit for knowledge dissemination, ensuring that the fruits of academic exploration are readily accessible to current and future learners. More than that, this initiative actively cultivates and preserves our institution's academic legacy, building a rich tapestry of intellectual achievement that will inspire and inform for years to come.
             </p>
             <div className="flex space-x-4">
               {/* Social icons would go here */}
