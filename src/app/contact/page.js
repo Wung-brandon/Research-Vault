@@ -104,11 +104,11 @@ export default function ContactPage() {
     },
     {
       question: "Is there a cost to access the research papers?",
-      answer: "No, FHS Research Library is completely free to use. Our mission is to make academic research accessible to everyone."
+      answer: "No, ResearchVault is completely free to use. Our mission is to make academic research accessible to everyone."
     },
     {
-      question: "Can I cite research papers from FHS Research Library?",
-      answer: "Yes, all papers on FHS Research Library can be cited according to standard academic citation formats. Each paper includes a recommended citation format."
+      question: "Can I cite research papers from FHS ResearchVault?",
+      answer: "Yes, all papers on ResearchVault can be cited according to standard academic citation formats. Each paper includes a recommended citation format."
     },
     {
       question: "Do you accept research from all academic disciplines?",
